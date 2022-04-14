@@ -117,24 +117,28 @@ namespace cryptographyswap {
 			// 
 			// textBox1
 			// 
+			this->textBox1->CharacterCasing = System::Windows::Forms::CharacterCasing::Lower;
 			this->textBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->textBox1->Location = System::Drawing::Point(12, 26);
 			this->textBox1->Margin = System::Windows::Forms::Padding(2);
 			this->textBox1->Multiline = true;
 			this->textBox1->Name = L"textBox1";
+			this->textBox1->ScrollBars = System::Windows::Forms::ScrollBars::Horizontal;
 			this->textBox1->Size = System::Drawing::Size(236, 152);
 			this->textBox1->TabIndex = 0;
 			this->textBox1->Validating += gcnew System::ComponentModel::CancelEventHandler(this, &MyForm::TextValidate);
 			// 
 			// textBox2
 			// 
+			this->textBox2->CharacterCasing = System::Windows::Forms::CharacterCasing::Lower;
 			this->textBox2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->textBox2->Location = System::Drawing::Point(252, 26);
 			this->textBox2->Margin = System::Windows::Forms::Padding(2);
 			this->textBox2->Multiline = true;
 			this->textBox2->Name = L"textBox2";
+			this->textBox2->ScrollBars = System::Windows::Forms::ScrollBars::Horizontal;
 			this->textBox2->Size = System::Drawing::Size(242, 152);
 			this->textBox2->TabIndex = 1;
 			this->textBox2->Validating += gcnew System::ComponentModel::CancelEventHandler(this, &MyForm::TextValidate);
@@ -176,12 +180,14 @@ namespace cryptographyswap {
 			// 
 			// textBox3
 			// 
+			this->textBox3->CharacterCasing = System::Windows::Forms::CharacterCasing::Lower;
 			this->textBox3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->textBox3->Location = System::Drawing::Point(14, 240);
 			this->textBox3->Margin = System::Windows::Forms::Padding(2);
 			this->textBox3->Multiline = true;
 			this->textBox3->Name = L"textBox3";
+			this->textBox3->ScrollBars = System::Windows::Forms::ScrollBars::Horizontal;
 			this->textBox3->Size = System::Drawing::Size(234, 161);
 			this->textBox3->TabIndex = 5;
 			this->textBox3->Validating += gcnew System::ComponentModel::CancelEventHandler(this, &MyForm::TextValidate);
@@ -207,6 +213,7 @@ namespace cryptographyswap {
 			this->textBox4->Multiline = true;
 			this->textBox4->Name = L"textBox4";
 			this->textBox4->ReadOnly = true;
+			this->textBox4->ScrollBars = System::Windows::Forms::ScrollBars::Horizontal;
 			this->textBox4->Size = System::Drawing::Size(242, 161);
 			this->textBox4->TabIndex = 7;
 			// 
@@ -277,6 +284,7 @@ namespace cryptographyswap {
 			this->button4->TabIndex = 13;
 			this->button4->Text = L"Расшифровать";
 			this->button4->UseVisualStyleBackColor = true;
+			this->button4->Click += gcnew System::EventHandler(this, &MyForm::button4_Click);
 			// 
 			// button5
 			// 
@@ -485,7 +493,7 @@ namespace cryptographyswap {
 		}
 
 		if (this->textBox1->TextLength % this->textBox5->TextLength != 0) {
-			this->labelErrors->Text = "Ключ должен быть кратен длинне текста. Остаток: ";
+			this->labelErrors->Text = "Ключ должен быть кратен длине текста. Остаток: ";
 			this->labelErrors->Text += (this->textBox1->TextLength % this->textBox5->TextLength);
 			return;
 		}
@@ -526,6 +534,26 @@ namespace cryptographyswap {
 			}
 		}
 		return 0;
+	}
+
+	System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) { //Расшифрование
+		if (ValidationKeys() != 0) { return; }
+
+		if (this->textBox2->TextLength <= 0) {
+			this->labelErrors->Text = "Введите шифр текст";
+			return;
+		}
+
+		if (this->textBox2->TextLength % this->textBox5->TextLength != 0) {
+			this->labelErrors->Text = "Ключ должен быть кратен длине текста. Остаток: ";
+			this->labelErrors->Text += (this->textBox2->TextLength % this->textBox5->TextLength);
+			return;
+		}
+
+		this->textBox4->Text = gcnew System::String(encryptor->decrypt(
+			msclr::interop::marshal_as<std::string>(this->textBox2->Text),
+			msclr::interop::marshal_as<std::string>(this->textBox5->Text)
+		).c_str());
 	}
 };
 }

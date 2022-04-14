@@ -9,13 +9,30 @@ string Swap::encrypt(string text, string key) {
 	string word;
 
 	text = validate(text);
-	//key = validate(key);
 
 	for (int i = 0; i < text.length() / key.length(); i++) {
 		word.clear();
 		for (int j = 0; j < key.length(); j++) {
 			string s{ key[j] };
 			word += text[stoi(s) + key.length() * i - 1];
+		}
+		result += word;
+	}
+
+	return result;
+};
+
+string Swap::decrypt(string text, string key) {
+	string result;
+	string word;
+
+	for (int i = 0; i < text.length() / key.length(); i++) {
+		word.clear();
+		for (int j = 0; j < key.length(); j++) {
+			//string x { j + 1 };
+			int s = key.find(to_string(j+1));
+			
+			word += text[s + key.length() * i];
 		}
 		result += word;
 	}
