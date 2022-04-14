@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include "fstream"
+#include <algorithm>
 #include <msclr\marshal_cppstd.h>
 
 namespace cryptographyswap {
@@ -23,9 +24,9 @@ namespace cryptographyswap {
 		MyForm(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: добавьте код конструктора
-			//
+
+			this->labelErrors->ResetText();
+			this->labelErrors->Visible = true;
 		}
 
 	protected:
@@ -59,7 +60,8 @@ namespace cryptographyswap {
 	private: System::Windows::Forms::OpenFileDialog^ openFileDialog1;
 	private: System::Windows::Forms::ComboBox^ comboBox1;
 	private: System::Windows::Forms::Label^ label6;
-	private: System::Windows::Forms::Label^ label7;
+	private: System::Windows::Forms::Label^ labelErrors;
+
 	private: System::Windows::Forms::DataVisualization::Charting::Chart^ chart1;
 	private: System::Windows::Forms::DataGridView^ dataGridView1;
 
@@ -77,8 +79,8 @@ namespace cryptographyswap {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			System::Windows::Forms::DataVisualization::Charting::ChartArea^ chartArea4 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
-			System::Windows::Forms::DataVisualization::Charting::Series^ series4 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::ChartArea^ chartArea1 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
@@ -98,7 +100,7 @@ namespace cryptographyswap {
 			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
 			this->label6 = (gcnew System::Windows::Forms::Label());
-			this->label7 = (gcnew System::Windows::Forms::Label());
+			this->labelErrors = (gcnew System::Windows::Forms::Label());
 			this->chart1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart1))->BeginInit();
@@ -110,7 +112,7 @@ namespace cryptographyswap {
 			this->textBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->textBox1->Location = System::Drawing::Point(12, 26);
-			this->textBox1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->textBox1->Margin = System::Windows::Forms::Padding(2);
 			this->textBox1->Multiline = true;
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(236, 152);
@@ -122,7 +124,7 @@ namespace cryptographyswap {
 			this->textBox2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->textBox2->Location = System::Drawing::Point(252, 26);
-			this->textBox2->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->textBox2->Margin = System::Windows::Forms::Padding(2);
 			this->textBox2->Multiline = true;
 			this->textBox2->Name = L"textBox2";
 			this->textBox2->Size = System::Drawing::Size(242, 152);
@@ -156,7 +158,7 @@ namespace cryptographyswap {
 			// button1
 			// 
 			this->button1->Location = System::Drawing::Point(12, 182);
-			this->button1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->button1->Margin = System::Windows::Forms::Padding(2);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(235, 26);
 			this->button1->TabIndex = 4;
@@ -169,7 +171,7 @@ namespace cryptographyswap {
 			this->textBox3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->textBox3->Location = System::Drawing::Point(14, 240);
-			this->textBox3->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->textBox3->Margin = System::Windows::Forms::Padding(2);
 			this->textBox3->Multiline = true;
 			this->textBox3->Name = L"textBox3";
 			this->textBox3->Size = System::Drawing::Size(234, 161);
@@ -193,7 +195,7 @@ namespace cryptographyswap {
 			this->textBox4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->textBox4->Location = System::Drawing::Point(252, 240);
-			this->textBox4->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->textBox4->Margin = System::Windows::Forms::Padding(2);
 			this->textBox4->Multiline = true;
 			this->textBox4->Name = L"textBox4";
 			this->textBox4->ReadOnly = true;
@@ -203,7 +205,7 @@ namespace cryptographyswap {
 			// button2
 			// 
 			this->button2->Location = System::Drawing::Point(14, 405);
-			this->button2->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->button2->Margin = System::Windows::Forms::Padding(2);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(234, 26);
 			this->button2->TabIndex = 8;
@@ -240,7 +242,7 @@ namespace cryptographyswap {
 			// 
 			this->textBox5->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->textBox5->Location = System::Drawing::Point(1072, 85);
-			this->textBox5->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->textBox5->Margin = System::Windows::Forms::Padding(2);
 			this->textBox5->Name = L"textBox5";
 			this->textBox5->Size = System::Drawing::Size(121, 20);
 			this->textBox5->TabIndex = 11;
@@ -249,18 +251,19 @@ namespace cryptographyswap {
 			// 
 			this->button3->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->button3->Location = System::Drawing::Point(1072, 109);
-			this->button3->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->button3->Margin = System::Windows::Forms::Padding(2);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(121, 24);
 			this->button3->TabIndex = 12;
 			this->button3->Text = L"Зашифровать";
 			this->button3->UseVisualStyleBackColor = true;
+			this->button3->Click += gcnew System::EventHandler(this, &MyForm::button3_Click);
 			// 
 			// button4
 			// 
 			this->button4->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->button4->Location = System::Drawing::Point(1072, 137);
-			this->button4->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->button4->Margin = System::Windows::Forms::Padding(2);
 			this->button4->Name = L"button4";
 			this->button4->Size = System::Drawing::Size(121, 24);
 			this->button4->TabIndex = 13;
@@ -271,7 +274,7 @@ namespace cryptographyswap {
 			// 
 			this->button5->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->button5->Location = System::Drawing::Point(1072, 194);
-			this->button5->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->button5->Margin = System::Windows::Forms::Padding(2);
 			this->button5->Name = L"button5";
 			this->button5->Size = System::Drawing::Size(121, 24);
 			this->button5->TabIndex = 14;
@@ -282,7 +285,7 @@ namespace cryptographyswap {
 			// 
 			this->button6->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->button6->Location = System::Drawing::Point(1072, 166);
-			this->button6->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->button6->Margin = System::Windows::Forms::Padding(2);
 			this->button6->Name = L"button6";
 			this->button6->Size = System::Drawing::Size(121, 24);
 			this->button6->TabIndex = 15;
@@ -296,7 +299,6 @@ namespace cryptographyswap {
 			// comboBox1
 			// 
 			this->comboBox1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-			this->comboBox1->FormattingEnabled = true;
 			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(9) {
 				L"2", L"3", L"4", L"5", L"6", L"7", L"8", L"9",
 					L"10"
@@ -319,34 +321,34 @@ namespace cryptographyswap {
 			this->label6->TabIndex = 17;
 			this->label6->Text = L"Ключ:";
 			// 
-			// label7
+			// labelErrors
 			// 
-			this->label7->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-			this->label7->AutoSize = true;
-			this->label7->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->labelErrors->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
+			this->labelErrors->AutoSize = true;
+			this->labelErrors->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label7->ForeColor = System::Drawing::Color::Red;
-			this->label7->Location = System::Drawing::Point(506, 7);
-			this->label7->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
-			this->label7->Name = L"label7";
-			this->label7->Size = System::Drawing::Size(61, 17);
-			this->label7->TabIndex = 18;
-			this->label7->Text = L"Ошибки";
-			this->label7->Visible = false;
+			this->labelErrors->ForeColor = System::Drawing::Color::Red;
+			this->labelErrors->Location = System::Drawing::Point(506, 7);
+			this->labelErrors->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+			this->labelErrors->Name = L"labelErrors";
+			this->labelErrors->Size = System::Drawing::Size(61, 17);
+			this->labelErrors->TabIndex = 18;
+			this->labelErrors->Text = L"Ошибки";
+			this->labelErrors->Visible = false;
 			// 
 			// chart1
 			// 
 			this->chart1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				| System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
-			chartArea4->Name = L"ChartArea1";
-			this->chart1->ChartAreas->Add(chartArea4);
+			chartArea1->Name = L"ChartArea1";
+			this->chart1->ChartAreas->Add(chartArea1);
 			this->chart1->Location = System::Drawing::Point(509, 29);
 			this->chart1->Name = L"chart1";
-			series4->ChartArea = L"ChartArea1";
-			series4->Name = L"Series1";
-			series4->XValueType = System::Windows::Forms::DataVisualization::Charting::ChartValueType::String;
-			this->chart1->Series->Add(series4);
+			series1->ChartArea = L"ChartArea1";
+			series1->Name = L"Series1";
+			series1->XValueType = System::Windows::Forms::DataVisualization::Charting::ChartValueType::String;
+			this->chart1->Series->Add(series1);
 			this->chart1->Size = System::Drawing::Size(555, 149);
 			this->chart1->TabIndex = 19;
 			this->chart1->Text = L"chart1";
@@ -362,6 +364,7 @@ namespace cryptographyswap {
 			this->dataGridView1->Name = L"dataGridView1";
 			this->dataGridView1->Size = System::Drawing::Size(555, 312);
 			this->dataGridView1->TabIndex = 20;
+			this->dataGridView1->Visible = false;
 			// 
 			// MyForm
 			// 
@@ -370,7 +373,7 @@ namespace cryptographyswap {
 			this->ClientSize = System::Drawing::Size(1201, 531);
 			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->chart1);
-			this->Controls->Add(this->label7);
+			this->Controls->Add(this->labelErrors);
 			this->Controls->Add(this->label6);
 			this->Controls->Add(this->comboBox1);
 			this->Controls->Add(this->button6);
@@ -389,7 +392,7 @@ namespace cryptographyswap {
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->textBox1);
-			this->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->Margin = System::Windows::Forms::Padding(2);
 			this->Name = L"MyForm";
 			this->Text = L"Шифр простой перестановки";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart1))->EndInit();
@@ -462,6 +465,54 @@ namespace cryptographyswap {
 	System::Void TextValidate(System::Object^ sender, System::ComponentModel::CancelEventArgs^ e) { // Валидация
 		TextBox^ textbox = safe_cast<TextBox^>(sender);
 		textbox->Text = System::Text::RegularExpressions::Regex::Replace(textbox->Text, "[^а-я ]", "");
+	}
+
+	System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) { // Зашифровать
+		
+		if (ValidationKeys() != 0) { return; }
+
+		if (this->textBox1->TextLength <= 0) {
+			this->labelErrors->Text = "Введите исходный текст";
+			return;
+		}
+
+		if (this->textBox1->TextLength % this->textBox5->TextLength != 0) {
+			this->labelErrors->Text = "Ключ должен быть кратен длинне текста. Остаток: ";
+			this->labelErrors->Text += (this->textBox1->TextLength % this->textBox5->TextLength);
+			return;
+		}
+	}
+
+	int ValidationKeys() {
+		this->labelErrors->ResetText();
+		if (this->comboBox1->SelectedIndex == -1) {
+			this->labelErrors->Text = "Выберите длину ключа.";
+			return 1;
+		}
+
+		if (this->textBox5->TextLength <= 0) {
+			this->labelErrors->Text = "Введите ключ";
+			return 1;
+		}
+
+		if (this->textBox5->TextLength != Int16::Parse(this->comboBox1->Text)) {
+			this->labelErrors->Text = "Длина ключа и ключ не совпадают";
+			return 1;
+		}
+
+		string key = msclr::interop::marshal_as<std::string>(this->textBox5->Text);
+
+		sort(key.begin(), key.end());
+
+		for (int i = 0; i < key.length(); i++)
+		{
+			string s{ key[i] };
+			if (stoi(s) != i + 1) {
+				this->labelErrors->Text = "Ключ должен состоять из цифр от 1 до длины ключа";
+				return 1;
+			}
+		}
+		return 0;
 	}
 };
 }
