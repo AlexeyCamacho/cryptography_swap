@@ -4,6 +4,7 @@
 #include "fstream"
 #include <algorithm>
 #include <msclr\marshal_cppstd.h>
+#include "Swap.h"
 
 namespace cryptographyswap {
 
@@ -14,6 +15,11 @@ namespace cryptographyswap {
 	using namespace System::Data;
 	using namespace System::Drawing;
 	using namespace std;
+
+	const char ABC[] = { 'а', 'б', 'в', 'г', 'д', 'е', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н',
+		'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я', ' ' };
+
+	Swap* encryptor = new Swap(ABC);
 
 	/// <summary>
 	/// Сводка для MyForm
@@ -64,6 +70,8 @@ namespace cryptographyswap {
 
 	private: System::Windows::Forms::DataVisualization::Charting::Chart^ chart1;
 	private: System::Windows::Forms::DataGridView^ dataGridView1;
+
+
 
 
 	private:
@@ -481,6 +489,11 @@ namespace cryptographyswap {
 			this->labelErrors->Text += (this->textBox1->TextLength % this->textBox5->TextLength);
 			return;
 		}
+
+		this->textBox2->Text = gcnew System::String(encryptor->encrypt(
+			msclr::interop::marshal_as<std::string>(this->textBox1->Text),
+			msclr::interop::marshal_as<std::string>(this->textBox5->Text)
+		).c_str());
 	}
 
 	int ValidationKeys() {
