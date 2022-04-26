@@ -516,7 +516,7 @@ namespace cryptographyswap {
 		).c_str());
 	}
 
-	int ValidationKeys() {
+	int ValidationKeys() { // Валидация ключа
 		this->labelErrors->ResetText();
 		if (this->comboBox1->SelectedIndex == -1) {
 			this->labelErrors->Text = "Выберите длину ключа.";
@@ -548,7 +548,7 @@ namespace cryptographyswap {
 		return 0;
 	}
 
-	System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) { //Расшифрование
+	System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) { // Расшифрование
 		if (ValidationKeys() != 0) { return; }
 
 		if (this->textBox2->TextLength <= 0) {
@@ -598,7 +598,7 @@ namespace cryptographyswap {
 		displayBigrams(bigrams, this->dataGridView1);
 	}
 
-	void drowGraf(map<char, double> points, System::Windows::Forms::DataVisualization::Charting::Series^ series) {
+	void drowGraf(map<char, double> points, System::Windows::Forms::DataVisualization::Charting::Series^ series) { // Рисование графа
 		series->Points->Clear();
 
 		map<char, double>::iterator itr;
@@ -608,7 +608,7 @@ namespace cryptographyswap {
 		}
 	}
 
-	void displayBigrams(vector<vector<int>> bigrams, System::Windows::Forms::DataGridView^ grid) {
+	void displayBigrams(vector<vector<int>> bigrams, System::Windows::Forms::DataGridView^ grid) { // Отобразить биграммы
 		for (int i = 0; i < SIZE_ABC; i++) {
 			grid->Columns[i]->HeaderText = gcnew System::String(string{ originalModel->GetCharABC(i) }.c_str());
 			grid->Rows[i]->HeaderCell->Value = gcnew System::String(string{ originalModel->GetCharABC(i) }.c_str());

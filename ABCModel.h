@@ -11,15 +11,15 @@ using namespace std;
 class ABCModel
 {
 private:
-	vector<char> ABC;
-	vector<vector<int>> bigrams; // Биграммы
 	set<string> wordsFromOneLetter;
 	set<string> wordsFromTwoLetter;
 	set<string> wordsFromThreeLetter;
 	double indexOfMatches; // Индекс совпадений
+	map<char, double> distribution; // Распределние символов | Неудачный вариант решения. Лучше использовать вектор
 
 protected:
-	map<char, double> distribution; // Распределние символов | Неудачный вариант решения. Лучше использовать вектор
+	vector<char> ABC;
+	vector<vector<int>> bigrams; // Биграммы
 
 public:
 	ABCModel(const char ABC[]); // Конструктор
