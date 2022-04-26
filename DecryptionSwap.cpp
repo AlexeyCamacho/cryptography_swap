@@ -10,7 +10,7 @@ string DecryptionSwap::Hacking(string& text)
 	string result;
 	int maxChance = 0;
 	vector<string> words;
-	for (int i = 2; i <= 10; i++) { // Перебор по длине ключа
+	for (int i = 2; i < 10; i++) { // Перебор по длине ключа
 		string s = "";
 		words.clear();
 		int chance = 0;
@@ -19,7 +19,7 @@ string DecryptionSwap::Hacking(string& text)
 
 
 		int j = 0;
-		while (j < text.length()) {
+		while (j < text.length() && words.size() < 50) {
 			s.assign(text, j, i);
 			if (s.length() == i) {
 				words.push_back(s);
