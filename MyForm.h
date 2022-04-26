@@ -6,6 +6,7 @@
 #include <msclr\marshal_cppstd.h>
 #include "Swap.h"
 #include "ABCModel.h"
+#include "DecryptionSwap.h"
 
 namespace cryptographyswap {
 
@@ -25,6 +26,7 @@ namespace cryptographyswap {
 	Swap* encryptor = new Swap(ABC);
 	ABCModel* originalModel = new ABCModel(ABC);
 	ABCModel* cryptoModel = new ABCModel(ABC);
+	DecryptionSwap* Decryptor = new DecryptionSwap(ABC);
 
 	/// <summary>
 	/// Сводка для MyForm
@@ -78,6 +80,7 @@ namespace cryptographyswap {
 
 	private: System::Windows::Forms::DataVisualization::Charting::Chart^ chart1;
 	private: System::Windows::Forms::DataGridView^ dataGridView1;
+	private: System::Windows::Forms::Label^ label7;
 
 
 
@@ -95,9 +98,9 @@ namespace cryptographyswap {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			System::Windows::Forms::DataVisualization::Charting::ChartArea^ chartArea2 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
-			System::Windows::Forms::DataVisualization::Charting::Series^ series3 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
-			System::Windows::Forms::DataVisualization::Charting::Series^ series4 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::ChartArea^ chartArea1 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm::typeid));
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
@@ -121,6 +124,7 @@ namespace cryptographyswap {
 			this->labelErrors = (gcnew System::Windows::Forms::Label());
 			this->chart1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
+			this->label7 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
@@ -134,7 +138,7 @@ namespace cryptographyswap {
 			this->textBox1->Margin = System::Windows::Forms::Padding(2);
 			this->textBox1->Multiline = true;
 			this->textBox1->Name = L"textBox1";
-			this->textBox1->ScrollBars = System::Windows::Forms::ScrollBars::Horizontal;
+			this->textBox1->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
 			this->textBox1->Size = System::Drawing::Size(236, 152);
 			this->textBox1->TabIndex = 0;
 			this->textBox1->Validating += gcnew System::ComponentModel::CancelEventHandler(this, &MyForm::TextValidate);
@@ -148,7 +152,7 @@ namespace cryptographyswap {
 			this->textBox2->Margin = System::Windows::Forms::Padding(2);
 			this->textBox2->Multiline = true;
 			this->textBox2->Name = L"textBox2";
-			this->textBox2->ScrollBars = System::Windows::Forms::ScrollBars::Horizontal;
+			this->textBox2->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
 			this->textBox2->Size = System::Drawing::Size(242, 152);
 			this->textBox2->TabIndex = 1;
 			this->textBox2->Validating += gcnew System::ComponentModel::CancelEventHandler(this, &MyForm::TextValidate);
@@ -197,7 +201,7 @@ namespace cryptographyswap {
 			this->textBox3->Margin = System::Windows::Forms::Padding(2);
 			this->textBox3->Multiline = true;
 			this->textBox3->Name = L"textBox3";
-			this->textBox3->ScrollBars = System::Windows::Forms::ScrollBars::Horizontal;
+			this->textBox3->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
 			this->textBox3->Size = System::Drawing::Size(234, 161);
 			this->textBox3->TabIndex = 5;
 			this->textBox3->Validating += gcnew System::ComponentModel::CancelEventHandler(this, &MyForm::TextValidate);
@@ -223,7 +227,7 @@ namespace cryptographyswap {
 			this->textBox4->Multiline = true;
 			this->textBox4->Name = L"textBox4";
 			this->textBox4->ReadOnly = true;
-			this->textBox4->ScrollBars = System::Windows::Forms::ScrollBars::Horizontal;
+			this->textBox4->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
 			this->textBox4->Size = System::Drawing::Size(242, 161);
 			this->textBox4->TabIndex = 7;
 			// 
@@ -306,6 +310,7 @@ namespace cryptographyswap {
 			this->button5->TabIndex = 14;
 			this->button5->Text = L"Дешифровать";
 			this->button5->UseVisualStyleBackColor = true;
+			this->button5->Click += gcnew System::EventHandler(this, &MyForm::button5_Click);
 			// 
 			// button6
 			// 
@@ -364,19 +369,19 @@ namespace cryptographyswap {
 			// 
 			this->chart1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
-			chartArea2->AxisX->Interval = 1;
-			chartArea2->Name = L"ChartArea1";
-			this->chart1->ChartAreas->Add(chartArea2);
+			chartArea1->AxisX->Interval = 1;
+			chartArea1->Name = L"ChartArea1";
+			this->chart1->ChartAreas->Add(chartArea1);
 			this->chart1->Location = System::Drawing::Point(509, 26);
 			this->chart1->Name = L"chart1";
-			series3->ChartArea = L"ChartArea1";
-			series3->Name = L"Series1";
-			series3->XValueType = System::Windows::Forms::DataVisualization::Charting::ChartValueType::String;
-			series4->ChartArea = L"ChartArea1";
-			series4->Name = L"Series2";
-			series4->XValueType = System::Windows::Forms::DataVisualization::Charting::ChartValueType::String;
-			this->chart1->Series->Add(series3);
-			this->chart1->Series->Add(series4);
+			series1->ChartArea = L"ChartArea1";
+			series1->Name = L"Series1";
+			series1->XValueType = System::Windows::Forms::DataVisualization::Charting::ChartValueType::String;
+			series2->ChartArea = L"ChartArea1";
+			series2->Name = L"Series2";
+			series2->XValueType = System::Windows::Forms::DataVisualization::Charting::ChartValueType::String;
+			this->chart1->Series->Add(series1);
+			this->chart1->Series->Add(series2);
 			this->chart1->Size = System::Drawing::Size(637, 182);
 			this->chart1->TabIndex = 19;
 			this->chart1->Text = L"chart1";
@@ -393,11 +398,27 @@ namespace cryptographyswap {
 			this->dataGridView1->TabIndex = 20;
 			this->dataGridView1->Visible = false;
 			// 
+			// label7
+			// 
+			this->label7->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
+			this->label7->AutoSize = true;
+			this->label7->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label7->ForeColor = System::Drawing::Color::Red;
+			this->label7->Location = System::Drawing::Point(11, 451);
+			this->label7->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+			this->label7->Name = L"label7";
+			this->label7->Size = System::Drawing::Size(125, 17);
+			this->label7->TabIndex = 21;
+			this->label7->Text = L"Возможный ключ:";
+			this->label7->Visible = false;
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1283, 659);
+			this->Controls->Add(this->label7);
 			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->chart1);
 			this->Controls->Add(this->labelErrors);
@@ -619,6 +640,25 @@ namespace cryptographyswap {
 				grid->Rows[i]->Cells[j]->Value = bigrams[i][j];
 			}
 		}
+	}
+
+	System::Void button5_Click(System::Object^ sender, System::EventArgs^ e) { // Дешифрование
+		this->labelErrors->ResetText();
+		this->label7->Visible = true;
+
+		if (this->textBox2->TextLength <= 0) {
+			this->labelErrors->Text = "Введите шифр текст";
+			return;
+		}
+
+		string encryptionText = msclr::interop::marshal_as<std::string>(this->textBox2->Text);
+
+		Decryptor->CalculateBigrams(msclr::interop::marshal_as<std::string>(this->textBox3->Text));
+		string key = Decryptor->Hacking(encryptionText);
+
+		System::String^ x = gcnew System::String(string{ key }.c_str());
+		this->label7->Text = "Возможный ключ:";
+		this->label7->Text += x;
 	}
 };
 }
